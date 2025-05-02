@@ -1,7 +1,18 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'org.flywaydb:flyway-database-postgresql:11.8.0'
+  }
+}
+
 plugins {
   id 'java'
+  id 'jacoco'
   id 'org.springframework.boot' version '3.4.5'
   id 'io.spring.dependency-management' version '1.1.7'
+  id 'org.flywaydb.flyway' version '11.8.0'
 }
 
 group = 'org.example'
@@ -21,10 +32,13 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
   implementation 'org.springframework.boot:spring-boot-starter-amqp'
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-validation'
   implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
   implementation 'org.flywaydb:flyway-core'
   implementation 'org.flywaydb:flyway-database-postgresql'
   developmentOnly 'org.springframework.boot:spring-boot-devtools'
+  developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
   runtimeOnly 'org.postgresql:postgresql'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'org.springframework.amqp:spring-rabbit-test'
@@ -33,4 +47,43 @@ dependencies {
 
 tasks.named('test') {
   useJUnitPlatform()
+  finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+  dependsOn test
+  reports {
+    html.required.set(true)
+    xml.required.set(false)
+    csv.required.set(false)
+  }
+
+  afterEvaluate {
+    classDirectories.setFrom(
+        files(classDirectories.files.collect {
+          fileTree(dir: it, exclude: [
+              '**/configuration/**',
+              '**/CustomRbacJavaDemoApplication.class'
+          ])
+        })
+    )
+  }
+
+  doLast {
+    def htmlReportDir = layout.buildDirectory.dir("reports/jacoco/test/html").get().asFile
+    def jacocoCss = new File(htmlReportDir, "jacoco-resources/report.css")
+    def darkTheme = file("src/main/resources/static/jacoco-theme.css")
+
+    if (jacocoCss.exists() && darkTheme.exists()) {
+      jacocoCss.append("\n\n" + darkTheme.text)
+    }
+  }
+}
+
+flyway {
+  url = 'jdbc:postgresql://localhost:5435/postgres'
+  user = 'postgres'
+  password = 'postgres'
+  locations = ['classpath:db/migration']
+  cleanDisabled = true
 }

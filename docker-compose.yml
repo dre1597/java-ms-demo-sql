@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ms-demo-db:/var/lib/postgresql/data
+    networks:
+      - ms-demo-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - ms-demo-rabbitmq:/var/lib/rabbitmq
+      - ms-demo-rabbitmq-logs:/var/log/rabbitmq
+    networks:
+      - ms-demo-network
+
+volumes:
+  ms-demo-db:
+  ms-demo-rabbitmq:
+  ms-demo-rabbitmq-logs:
+
+networks:
+  ms-demo-network:
+    driver: bridge
