@@ -1,6 +1,7 @@
 package org.example.javamsdemosql.services;
 
 import org.example.javamsdemosql.configuration.rabbitmq.RabbitMQConfig;
+import org.example.javamsdemosql.dto.SendMessageDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class MessageProducer {
     this.rabbitTemplate = Objects.requireNonNull(rabbitTemplate);
   }
 
-  public void sendMessage(final String message) {
-    rabbitTemplate.convertAndSend(RabbitMQConfig.DEMO_QUEUE, message);
+  public void sendMessage(final SendMessageDto dto) {
+    rabbitTemplate.convertAndSend(RabbitMQConfig.DEMO_QUEUE, dto);
   }
 }
