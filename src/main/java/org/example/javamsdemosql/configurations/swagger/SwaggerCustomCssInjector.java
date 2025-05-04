@@ -1,4 +1,4 @@
-package org.example.javamsdemosql.configuration.swagger;
+package org.example.javamsdemosql.configurations.swagger;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springdoc.core.properties.SwaggerUiConfigProperties;

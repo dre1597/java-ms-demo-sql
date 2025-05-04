@@ -1,6 +1,6 @@
 package org.example.javamsdemosql.services;
 
-import org.example.javamsdemosql.configuration.rabbitmq.RabbitMQConfig;
+import org.example.javamsdemosql.configurations.amqp.RabbitMQConfig;
 import org.example.javamsdemosql.dto.SendMessageDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

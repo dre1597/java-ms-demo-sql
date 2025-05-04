@@ -1,4 +1,4 @@
-package org.example.javamsdemosql.configuration.rabbitmq;
+package org.example.javamsdemosql.configurations.amqp;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

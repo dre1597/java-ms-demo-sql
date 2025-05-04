@@ -1,0 +1,14 @@
+package org.example.javamsdemosql.repositories;
+
+import org.example.javamsdemosql.entities.MessageEntity;
+import org.example.javamsdemosql.enums.MessageStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.UUID;
+
+@Repository
+public interface MessageRepository extends JpaRepository<MessageEntity, UUID> {
+  List<MessageEntity> findByStatus(final MessageStatus status);
+}

@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS messages (
+    id UUID PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    content VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    retry_attempts INT NOT NULL,
+    processed_at TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
