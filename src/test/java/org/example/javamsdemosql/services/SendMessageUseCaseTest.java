@@ -1,6 +1,6 @@
 package org.example.javamsdemosql.services;
 
-import org.example.javamsdemosql.dto.SendMessageDto;
+import org.example.javamsdemosql.dto.MessageDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,7 +19,7 @@ class SendMessageUseCaseTest {
 
   @Test
   void shouldSendMessage() {
-    final var dto = new SendMessageDto("any_title", "any_content");
+    final var dto = new MessageDto("any_title", "any_content");
     useCase.execute(dto);
     verify(messageProducer).sendMessage(dto);
   }

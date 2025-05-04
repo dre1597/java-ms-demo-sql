@@ -1,6 +1,6 @@
 package org.example.javamsdemosql.controllers;
 
-import org.example.javamsdemosql.dto.SendMessageDto;
+import org.example.javamsdemosql.dto.MessageDto;
 import org.example.javamsdemosql.enums.MessageStatus;
 import org.example.javamsdemosql.mocks.MessageMocks;
 import org.example.javamsdemosql.services.FindAllMessagesUseCase;
@@ -34,7 +34,7 @@ class MessageControllerTest {
 
   @Test
   void shouldSendMessage() {
-    final var dto = new SendMessageDto("any_title", "any_content");
+    final var dto = new MessageDto("any_title", "any_content");
     controller.sendMessage(dto);
     verify(sendMessageUseCase).execute(dto);
   }

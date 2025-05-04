@@ -1,6 +1,6 @@
 package org.example.javamsdemosql.controllers;
 
-import org.example.javamsdemosql.dto.SendMessageDto;
+import org.example.javamsdemosql.dto.MessageDto;
 import org.example.javamsdemosql.entities.MessageEntity;
 import org.example.javamsdemosql.enums.MessageStatus;
 import org.example.javamsdemosql.services.FindAllMessagesUseCase;
@@ -28,7 +28,7 @@ public class MessageController {
   }
 
   @PostMapping("/send")
-  public void sendMessage(@RequestBody final SendMessageDto dto) {
+  public void sendMessage(@RequestBody final MessageDto dto) {
     this.sendMessageUseCase.execute(dto);
   }
 

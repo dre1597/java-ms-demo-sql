@@ -1,6 +1,6 @@
 package org.example.javamsdemosql.services;
 
-import org.example.javamsdemosql.dto.SendMessageDto;
+import org.example.javamsdemosql.dto.MessageDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,7 +28,7 @@ class RetryingRabbitListenerTest {
   @InjectMocks
   private RetryingRabbitListener listener;
 
-  private final SendMessageDto testDto = new SendMessageDto("any_test", "any_content");
+  private final MessageDto testDto = new MessageDto("any_test", "any_content");
 
   @Test
   void shouldProcessFirstAttemptSuccessfully() {

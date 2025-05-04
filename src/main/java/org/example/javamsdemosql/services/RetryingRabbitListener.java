@@ -1,7 +1,7 @@
 package org.example.javamsdemosql.services;
 
+import org.example.javamsdemosql.dto.MessageDto;
 import org.example.javamsdemosql.dto.SaveMessageDto;
-import org.example.javamsdemosql.dto.SendMessageDto;
 import org.example.javamsdemosql.enums.MessageStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class RetryingRabbitListener {
 
   @RabbitListener(queues = DEMO_QUEUE)
   public void primary(
-      final SendMessageDto dto,
+      final MessageDto dto,
       @Header(required = false, name = "x-death") final Map<String, ?> xDeath
   ) {
     final var attempt = xDeath != null ? (Long) xDeath.get("count") + 1 : 1;
@@ -61,7 +61,7 @@ public class RetryingRabbitListener {
   }
 
   private void saveMessage(
-      final SendMessageDto dto,
+      final MessageDto dto,
       final MessageStatus status,
       final int retryAttempts
   ) {
@@ -97,7 +97,7 @@ public class RetryingRabbitListener {
     return false;
   }
 
-  private void sendToUndelivered(final SendMessageDto dto) {
+  private void sendToUndelivered(final MessageDto dto) {
     log.warn("maximum retry reached, send message to the undelivered queue, msg: {}", dto);
     this.rabbitTemplate.convertAndSend(UNDELIVERED_QUEUE, dto);
   }

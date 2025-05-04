@@ -1,6 +1,6 @@
 package org.example.javamsdemosql.services;
 
-import org.example.javamsdemosql.dto.SendMessageDto;
+import org.example.javamsdemosql.dto.MessageDto;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -13,7 +13,7 @@ public class SendMessageUseCase {
     this.messageProducer = Objects.requireNonNull(messageProducer);
   }
 
-  public void execute(final SendMessageDto dto) {
+  public void execute(final MessageDto dto) {
     messageProducer.sendMessage(dto);
   }
 }

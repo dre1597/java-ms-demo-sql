@@ -1,7 +1,7 @@
 package org.example.javamsdemosql.services;
 
 import org.example.javamsdemosql.configurations.amqp.RabbitMQConfig;
-import org.example.javamsdemosql.dto.SendMessageDto;
+import org.example.javamsdemosql.dto.MessageDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +21,7 @@ class MessageProducerTest {
 
   @Test
   void shouldSendMessageToQueue() {
-    final var dto = new SendMessageDto("any_title", "any_content");
+    final var dto = new MessageDto("any_title", "any_content");
     messageProducer.sendMessage(dto);
     verify(rabbitTemplate).convertAndSend(RabbitMQConfig.DEMO_QUEUE, dto);
   }
