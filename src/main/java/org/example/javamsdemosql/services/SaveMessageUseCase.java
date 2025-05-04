@@ -21,6 +21,7 @@ public class SaveMessageUseCase {
     messageJpa.setContent(dto.content());
     messageJpa.setStatus(dto.status());
     messageJpa.setRetryAttempts(dto.retryAttempts());
+    messageJpa.setProcessedAt(dto.processedAt());
     messageRepository.save(messageJpa);
   }
 }
