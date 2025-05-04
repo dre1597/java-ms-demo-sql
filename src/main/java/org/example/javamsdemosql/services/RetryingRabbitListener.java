@@ -1,9 +1,8 @@
-package org.example.javamsdemosql.configurations.amqp;
+package org.example.javamsdemosql.services;
 
 import org.example.javamsdemosql.dto.SaveMessageDto;
 import org.example.javamsdemosql.dto.SendMessageDto;
 import org.example.javamsdemosql.enums.MessageStatus;
-import org.example.javamsdemosql.services.SaveMessageUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

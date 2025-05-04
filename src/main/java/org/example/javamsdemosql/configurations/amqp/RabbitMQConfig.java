@@ -14,7 +14,7 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
 @Configuration
 public class RabbitMQConfig {
   public static final String DEMO_QUEUE = "demo.queue";
-  static final String UNDELIVERED_QUEUE = "demo.undelivered";
+  public static final String UNDELIVERED_QUEUE = "demo.undelivered";
   private static final String MAIN_ROUTING_KEY = "routing_key";
   private static final String EXCHANGE_NAME = "retry-exchange";
   private static final String RETRY_QUEUE = "demo.retry";
