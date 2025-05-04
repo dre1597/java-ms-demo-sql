@@ -1,0 +1,75 @@
+package org.example.javamsdemosql.controllers;
+
+import org.example.javamsdemosql.dto.SendMessageDto;
+import org.example.javamsdemosql.enums.MessageStatus;
+import org.example.javamsdemosql.mocks.MessageMocks;
+import org.example.javamsdemosql.services.FindAllMessagesUseCase;
+import org.example.javamsdemosql.services.FindByStatusUseCase;
+import org.example.javamsdemosql.services.SendMessageUseCase;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class MessageControllerTest {
+  @Mock
+  private SendMessageUseCase sendMessageUseCase;
+
+  @Mock
+  private FindAllMessagesUseCase findAllMessagesUseCase;
+
+  @Mock
+  private FindByStatusUseCase findByStatusUseCase;
+
+  @InjectMocks
+  private MessageController controller;
+
+  @Test
+  void shouldSendMessage() {
+    final var dto = new SendMessageDto("any_title", "any_content");
+    controller.sendMessage(dto);
+    verify(sendMessageUseCase).execute(dto);
+  }
+
+  @Test
+  void shouldFindAllMessages() {
+    final var createdMessage = MessageMocks.createTestMessage();
+
+    when(findAllMessagesUseCase.execute()).thenReturn(List.of(createdMessage));
+
+    final var result = controller.findAllMessages();
+
+    assertEquals(1, result.size());
+    assertEquals(createdMessage, result.getFirst());
+  }
+
+  @Test
+  void shouldFindByStatus() {
+    final var createdMessage = MessageMocks.createTestMessage();
+
+    when(findByStatusUseCase.execute(MessageStatus.PROCESSED)).thenReturn(List.of(createdMessage));
+
+    final var result = controller.findByStatus(MessageStatus.PROCESSED.toString());
+
+    assertEquals(1, result.size());
+    assertEquals(createdMessage, result.getFirst());
+  }
+
+  @Test
+  void shouldHandleInvalidStatus() {
+    try {
+      controller.findByStatus("INVALID_STATUS");
+    } catch (IllegalArgumentException e) {
+      assertEquals("No enum constant org.example.javamsdemosql.enums.MessageStatus.INVALID_STATUS",
+          e.getMessage());
+    }
+  }
+}
