@@ -1,7 +1,6 @@
 package org.example.javamsdemosql.entities;
 
 import jakarta.persistence.*;
-import org.example.javamsdemosql.enums.MessageStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,41 +20,24 @@ public class MessageEntity {
   @Column(nullable = false, length = 1000)
   private String content;
 
-  @Enumerated(EnumType.STRING)
-  @Column(nullable = false)
-  private MessageStatus status;
-
   @CreationTimestamp
   private LocalDateTime createdAt;
 
   @UpdateTimestamp
   private LocalDateTime updatedAt;
 
-  @Column
-  private LocalDateTime processedAt;
-
-  @Column(nullable = false)
-  private int retryAttempts;
-
   public MessageEntity(
       final UUID id,
       final String title,
-      final String content,
-      final MessageStatus status,
-      final LocalDateTime createdAt,
-      final LocalDateTime processedAt,
-      final int retryAttempts
+      final String content
   ) {
     this.id = id;
     this.title = title;
     this.content = content;
-    this.status = status;
-    this.createdAt = createdAt;
-    this.processedAt = processedAt;
-    this.retryAttempts = retryAttempts;
   }
 
-  public MessageEntity() {}
+  public MessageEntity() {
+  }
 
   public UUID getId() {
     return this.id;
@@ -81,14 +63,6 @@ public class MessageEntity {
     this.content = content;
   }
 
-  public MessageStatus getStatus() {
-    return this.status;
-  }
-
-  public void setStatus(final MessageStatus status) {
-    this.status = status;
-  }
-
   public LocalDateTime getCreatedAt() {
     return this.createdAt;
   }
@@ -97,19 +71,11 @@ public class MessageEntity {
     this.createdAt = createdAt;
   }
 
-  public LocalDateTime getProcessedAt() {
-    return this.processedAt;
+  public LocalDateTime getUpdatedAt() {
+    return this.updatedAt;
   }
 
-  public void setProcessedAt(final LocalDateTime processedAt) {
-    this.processedAt = processedAt;
-  }
-
-  public int getRetryAttempts() {
-    return this.retryAttempts;
-  }
-
-  public void setRetryAttempts(final int retryAttempts) {
-    this.retryAttempts = retryAttempts;
+  public void setUpdatedAt(final LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

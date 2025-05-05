@@ -19,9 +19,6 @@ public class SaveMessageUseCase {
     final var messageJpa = new MessageEntity();
     messageJpa.setTitle(dto.title());
     messageJpa.setContent(dto.content());
-    messageJpa.setStatus(dto.status());
-    messageJpa.setRetryAttempts(dto.retryAttempts());
-    messageJpa.setProcessedAt(dto.processedAt());
     messageRepository.save(messageJpa);
   }
 }

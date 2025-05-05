@@ -1,10 +1,8 @@
 package org.example.javamsdemosql.controllers;
 
 import org.example.javamsdemosql.dto.MessageDto;
-import org.example.javamsdemosql.enums.MessageStatus;
 import org.example.javamsdemosql.mocks.MessageMocks;
 import org.example.javamsdemosql.services.FindAllMessagesUseCase;
-import org.example.javamsdemosql.services.FindByStatusUseCase;
 import org.example.javamsdemosql.services.SendMessageUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,9 +24,6 @@ class MessageControllerTest {
   @Mock
   private FindAllMessagesUseCase findAllMessagesUseCase;
 
-  @Mock
-  private FindByStatusUseCase findByStatusUseCase;
-
   @InjectMocks
   private MessageController controller;
 
@@ -49,27 +44,5 @@ class MessageControllerTest {
 
     assertEquals(1, result.size());
     assertEquals(createdMessage, result.getFirst());
-  }
-
-  @Test
-  void shouldFindByStatus() {
-    final var createdMessage = MessageMocks.createTestMessage();
-
-    when(findByStatusUseCase.execute(MessageStatus.PROCESSED)).thenReturn(List.of(createdMessage));
-
-    final var result = controller.findByStatus(MessageStatus.PROCESSED.toString());
-
-    assertEquals(1, result.size());
-    assertEquals(createdMessage, result.getFirst());
-  }
-
-  @Test
-  void shouldHandleInvalidStatus() {
-    try {
-      controller.findByStatus("INVALID_STATUS");
-    } catch (IllegalArgumentException e) {
-      assertEquals("No enum constant org.example.javamsdemosql.enums.MessageStatus.INVALID_STATUS",
-          e.getMessage());
-    }
   }
 }
